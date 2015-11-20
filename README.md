@@ -5,13 +5,13 @@
 
 ##What is this?
 
-This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://www.ng.bluemix.net/docs/services/Globalization/index.html). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
+This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
 
 --------------
 
 ## Licensing
 
-This project is licensed under the [Apache License](https://hub.jazz.net/project/vish1993/gp-ruby-client/overview#https://hub.jazz.net/git/vish1993%252Fgp-ruby-client/contents/master/License.txt)
+This project is licensed under the [Apache License](License.txt)
 
 -------------
 
