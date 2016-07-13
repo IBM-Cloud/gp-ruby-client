@@ -1,42 +1,32 @@
-<!-- Copyright IBM Corp. 2015 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. --> 
+<!-- Copyright IBM Corp. 2015 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 
 #Ruby Client for Globalization Pipeline on IBM Bluemix.
 --------------
 
-##What is this?
+##gp-ruby-client?
 
 This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
 
 --------------
 
-## Licensing
+##Getting started
 
-This project is licensed under the [Apache License](License.txt)
+To get started, you should familiarize yourself with the service itself. A
+good place to begin is by reading the [Quick Start Guide](https://github.com/IBM-Bluemix/gp-common#quick-start-guide) and the official [Getting Started with IBM Globalization ](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html) documentation.
 
--------------
+The documentation explains how to find the service on Bluemix, create a new service instance, create a new bundle, and access the translated messages.
 
-##Sample Application
-
-A sample application is provided [here](https://github.com/IBM-Bluemix/gp-ruby-sample). See the application's readme in the link for more details.
-
---------------
-
-##Quickstart
 
 Note: It is important to develop your application with the intention of using the translate function of the i18n gem. Develop your application as if you were going to provide the translation files.
 
 [Click here for Ruby's i18n gem tutorial](http://guides.rubyonrails.org/i18n.html)
 
-To familiarize yourself:
+--------------
 
-Create new Globalization Pipeline service instance
-![Create new Globalization Pipeline service instance](https://ibm.box.com/shared/static/v59b5a19qjkfhxqaiwauz37nd9d8o8m2.gif)
-
-Create new bundle
-![Create new bundle](https://ibm.box.com/shared/static/8p2ytfm28smh29rl50c581gcfb4hsz8z.gif) 
+##Installation
 
 To use Ruby Client for Globalization Pipeline
-	
+
 Add `gem 'gp-ruby-client'` in your gemfile. This will load up the Ruby SDK Gem and you can add require 'gp-ruby-client' in any file where you want to use the SDK.
 If you want to use the translated strings locally, you may run `gem install gp-ruby-client` in your shell.
 
@@ -44,12 +34,12 @@ Inside your application controller, you would place initializer code to use the 
 
 Basic initialization code would look like this:
 
-```Ruby 
+```Ruby
 before_filter :startUp
 
 def startUp
   require 'gp-ruby-client'
-  
+
   my_ruby_client = GP::Ruby::Client.new($bundle_id)
 end
 ```
@@ -58,6 +48,12 @@ Using Ruby Client outside of Bluemix:
 If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID. These should correspond with the credentials in your Globalization Pipeline service instance.
 
 ----------------
+
+##Sample Application
+
+A sample application is provided [here](https://github.com/IBM-Bluemix/gp-ruby-sample). See the application's readme in the link for more details.
+
+--------------
 
 ##API Reference
 ----------------
@@ -122,7 +118,7 @@ Sets your locale to the default locale
 
 ##class: gp-ruby-client~ServiceAccount
 
-This object acts as a storage for the user's credentials in order to make REST API Calls. 
+This object acts as a storage for the user's credentials in order to make REST API Calls.
 
 #### initialize
 
@@ -133,7 +129,7 @@ Creates a new service account object. This function creates a service account ob
 * userId
 * password
 * instanceId
-    
+
 ####get_url_string
 
 Getter function to get object's URL String (url of the location of the resources)
@@ -202,7 +198,7 @@ This function is meant to create an object that makes the appropriate REST API c
 * service_account
 * project_name
 * locale (optional)
-    
+
 #### get_bundles
 
 This function returns the name of all the bundles attached to the service you are using
@@ -247,7 +243,7 @@ Setter function to set the hash which will store the translated strings
 #### Params
 * map of translated strings
 
-   
+
 #### set_service_account
 Set the ServiceAccount object who's credentials the REST API calls will need
 
@@ -291,4 +287,35 @@ Set the cache update interval very high to a point where cache will rarely updat
 #### always_cache_update
 Set the cache update interval to 0 so cache updates everytime the application loads
 
+---------------
 
+##Community
+
+----------
+
+* View or file GitHub [Issues](https://github.com/IBM-Bluemix/gp-ruby-client/issues)
+* Connect with the open source community on [developerWorks Open](https://developer.ibm.com/open/ibm-bluemix-globalization-pipeline-service/ruby-sdk/)
+
+##Contributing
+
+------------
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+##License
+
+---------
+
+Apache 2.0. See [LICENSE.txt](LICENSE.txt).
+
+> Licensed under the Apache License, Version 2.0 (the "License");
+> you may not use this file except in compliance with the License.
+> You may obtain a copy of the License at
+>
+> http://www.apache.org/licenses/LICENSE-2.0
+>
+> Unless required by applicable law or agreed to in writing, software
+> distributed under the License is distributed on an "AS IS" BASIS,
+> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> See the License for the specific language governing permissions and
+> limitations under the License.
