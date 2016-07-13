@@ -55,11 +55,11 @@ A sample application is provided [here](https://github.com/IBM-Bluemix/gp-ruby-s
 
 --------------
 
-##API Reference
+
+#API Reference
 ----------------
 ##gp-ruby-client
 ---------------
-Author: Visaahan Anandarajah
 
 ##class: GP::Ruby::Client
 This object is meant to be the container of this entire SDK. This initializes all the objects necessary and allows to access and modify each object as necessary
@@ -289,20 +289,20 @@ Set the cache update interval to 0 so cache updates everytime the application lo
 
 ---------------
 
-##Community
+#Community
 
 ----------
 
 * View or file GitHub [Issues](https://github.com/IBM-Bluemix/gp-ruby-client/issues)
 * Connect with the open source community on [developerWorks Open](https://developer.ibm.com/open/ibm-bluemix-globalization-pipeline-service/ruby-sdk/)
 
-##Contributing
+#Contributing
 
 ------------
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-##License
+#License
 
 ---------
 
