@@ -1,0 +1,3 @@
+language: ruby
+install: true
+script: gem build gp-ruby-client.gemspec
