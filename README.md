@@ -5,12 +5,12 @@
 
 ## gp-ruby-client
 
-This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
+This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://console.bluemix.net/docs/services/GlobalizationPipeline/index.html#globalizationpipeline). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
 
 ## Getting started
 
 To get started, you should familiarize yourself with the service itself. A
-good place to begin is by reading the [Quick Start Guide](https://github.com/IBM-Bluemix/gp-common#quick-start-guide) and the official [Getting Started with IBM Globalization ](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html) documentation.
+good place to begin is by reading the [Quick Start Guide](https://github.com/IBM-Bluemix/gp-common#quick-start-guide) and the official [Getting Started with IBM Globalization ](https://console.bluemix.net/docs/services/GlobalizationPipeline/index.html#globalizationpipeline) documentation.
 
 The documentation explains how to find the service on Bluemix, create a new service instance, create a new bundle, and access the translated messages.
 
