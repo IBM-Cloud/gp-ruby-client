@@ -1,15 +1,13 @@
-<!-- Copyright IBM Corp. 2015 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+# Ruby Client for Globalization Pipeline on IBM Bluemix.
 
-#Ruby Client for Globalization Pipeline on IBM Bluemix.
---------------
+<!-- Copyright IBM Corp. 2015-2017 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 
-##gp-ruby-client?
+
+## gp-ruby-client
 
 This is a Ruby client for [Globalization Pipeline on IBM Bluemix](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html). This service allows users to seamlessly translate their applications effectively thus satisfying the need to reach multiple locales. Translation for Ruby on Rails applications is typically done through the i18n gem and requires the user to provide translation files. With Globalization Pipeline, these files are no longer necessary; just upload a file containing key-value pairs of strings you want to translate and all the strings will be dynamically translated and ready to use in your application
 
---------------
-
-##Getting started
+## Getting started
 
 To get started, you should familiarize yourself with the service itself. A
 good place to begin is by reading the [Quick Start Guide](https://github.com/IBM-Bluemix/gp-common#quick-start-guide) and the official [Getting Started with IBM Globalization ](https://www.ng.bluemix.net/docs/services/GlobalizationPipeline/index.html) documentation.
@@ -21,9 +19,8 @@ Note: It is important to develop your application with the intention of using th
 
 [Click here for Ruby's i18n gem tutorial](http://guides.rubyonrails.org/i18n.html)
 
---------------
 
-##Installation
+## Installation
 
 To use Ruby Client for Globalization Pipeline
 
@@ -47,21 +44,15 @@ Using Ruby Client outside of Bluemix:
 
 If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID. These should correspond with the credentials in your Globalization Pipeline service instance.
 
-----------------
-
-##Sample Application
+## Sample Application
 
 A sample application is provided [here](https://github.com/IBM-Bluemix/gp-ruby-sample). See the application's readme in the link for more details.
 
---------------
+----
+# API Reference: gp-ruby-client
 
+## class: `GP::Ruby::Client`
 
-#API Reference
-----------------
-##gp-ruby-client
----------------
-
-##class: GP::Ruby::Client
 This object is meant to be the container of this entire SDK. This initializes all the objects necessary and allows to access and modify each object as necessary
 
 #### Params
@@ -71,16 +62,16 @@ This object is meant to be the container of this entire SDK. This initializes al
 * RESTClient instance
 * CacheControl instance
 
-####initialize
+#### initialize
 This functions initializes several objects, such as the ServiceAccount object and the RESTClient object
 
 #### Params
 * bundle_id
 
-####get_bundle_id
+#### get_bundle_id
 Retrieves the name of your bundle.
 
-####set_bundle_id
+#### set_bundle_id
 Sets the name of your bundle to the name you provide
 
 #### Params
@@ -116,7 +107,7 @@ Retrieves the http ACCEPT_LANGUAGE variable for your location
 #### set_default_locale
 Sets your locale to the default locale
 
-##class: gp-ruby-client~ServiceAccount
+## class: gp-ruby-client~ServiceAccount
 
 This object acts as a storage for the user's credentials in order to make REST API Calls.
 
@@ -130,47 +121,47 @@ Creates a new service account object. This function creates a service account ob
 * password
 * instanceId
 
-####get_url_string
+#### get_url_string
 
 Getter function to get object's URL String (url of the location of the resources)
 
 
-####get_user_id
+#### get_user_id
 
 Getter function to get object's user id (for basic authentication purposes)
 
 
-####get_password
+#### get_password
 
 Getter function to get object's password (for basic authentication purposes)
 
 
-####get_instance_id
+#### get_instance_id
 
 Getter function to get object's URL String (url of the location of the resources)
 
-####set_url_string
+#### set_url_string
 
 Setter function to set object's URL String
 
 #### Params
 * url_string
 
-####set_user_id
+#### set_user_id
 
 Setter function to set object's user id
 
 #### Params
 * user_id
 
-####set_password
+#### set_password
 
 Setter function to set object's password
 
 #### Params
 * password
 
-####set_instance_id
+#### set_instance_id
 
 Setter function to set object's instance id
 
@@ -190,11 +181,11 @@ This class is used to make the REST API calls and store the results of those cal
 * project_name
 * locale
 
-####initialize
+#### initialize
 
 This function is meant to create an object that makes the appropriate REST API calls and stores translations to be used by the application. You may provide a locale to search for translations in a specific languages. Should a locale not be provided, it will load translations for all languages specified in the bundle.
 
-####Params
+#### Params
 * service_account
 * project_name
 * locale (optional)
@@ -210,7 +201,7 @@ Returns a hash of all the languages in the following format {source_language: [t
 #### get_resource_strings
 Populates the resource_data hash with all the translations. If you specify a specific locale, it will load only that locale, else it will load all the locales
 
-####Params
+#### Params
 * locale (optional)
 
 #### get_source_language
@@ -253,7 +244,7 @@ Set the ServiceAccount object who's credentials the REST API calls will need
 #### set_bundle_id
 Set the id of the bundle that the REST API will called
 
-####Params
+#### Params
 * bundleId
 
 ## class : gp-ruby-client~CacheControl
@@ -287,24 +278,18 @@ Set the cache update interval very high to a point where cache will rarely updat
 #### always_cache_update
 Set the cache update interval to 0 so cache updates everytime the application loads
 
----------------
 
-#Community
 
-----------
+# Community
 
 * View or file GitHub [Issues](https://github.com/IBM-Bluemix/gp-ruby-client/issues)
 * Connect with the open source community on [developerWorks Open](https://developer.ibm.com/open/ibm-bluemix-globalization-pipeline-service/ruby-sdk/)
 
-#Contributing
-
-------------
+# Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-#License
-
----------
+# License
 
 Apache 2.0. See [LICENSE.txt](LICENSE.txt).
 
