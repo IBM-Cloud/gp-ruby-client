@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.email       = 'icuintl@us.ibm.com'
   s.licenses	= 'Apache 2.0'
   s.homepage	= 'https://github.com/IBM-Bluemix/gp-ruby-client'
-  s.files       = ["lib/cache_control.rb", "lib/gp-ruby-client.rb", "lib/rest_client.rb", "lib/service_account.rb", "lib/hmac.rb"]
+  s.files       = ["src/cache_control.rb", "src/gp-ruby-client.rb", "src/rest_client.rb", "src/service_account.rb", "src/hmac.rb"]
 end
