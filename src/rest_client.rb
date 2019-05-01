@@ -156,7 +156,9 @@ private
 		uri = URI.parse(url.to_s)
 		request = Net::HTTP::Get.new uri.path
 		
-		if basic_auth
+		if service_account.is_iam_enabled
+      request["Authorization"] = "API-KEY #{service_account.get_api_key}"
+		else if basic_auth
 			request.basic_auth(service_account.get_user_id, service_account.get_password)
 		else
 			hmac = HMAC.new

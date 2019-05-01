@@ -18,20 +18,62 @@ require 'json'
 
 class ServiceAccount
 =begin
-	This object is meant to identify the user and contains credentials needed to make the REST API calls
+	This object is meant to identify the user and contains credentials needed to make the REST API calls. 
+  Access to Globalization Pipeline RC enabled service instances for users in is controlled by IBM Cloud Identity and Access Management 
+  (IAM) and/or Globalization Pipeline Authentication. Whereas for CF instances only Globalization Pipeline Authentication can be used.
 	
-	This class will either use user-provided variables, environment variables or vcap_services variables in your application
-	
-	url = base url string user must call for REST API
-	user_id = ID of user
-	password = password of user
-	instance_id = ID of your specific service instanceId
+  There are three options for creating a valid instance:
+    1. Provide the credentials as parameters.
+  
+       url_string = base url string user must call for REST API
+       user_id = ID of user
+       pwd = password of user
+       instance_id = ID of your specific service instanceId
+       api_key = IAM API Key to access the instance.
+  
+       Mandatory for both authentication mechanisms
+       url_string, instance_id
+       
+       For Globalization Pipeline authentication:
+       user_id and pwd
+       
+       For IAM authentication:
+       api_key
+    
+       If both Globalization Pipeline and IAM authentication credentials are provided then
+       instance will be initialized with Globalization Pipeline authentication.
+    
+    
+    2. Use the user defined environment variables for providing credentials (no params required).
+       GP_URL = base url string user must call for REST API
+       GP_USER_ID = ID of user
+       GP_PWD = password of user
+       GP_INSTANCE_ID = ID of your specific service instanceId
+       GP_IAM_API_KEY = IAM API Key to access the instance.
+       
+       Mandatory for both authentication mechanisms:
+       GP_URL, GP_INSTANCE_ID
+       
+       For Globalization Pipeline authentication:
+       GP_USER_ID, GP_PWD
+    
+       For IAM authentication:
+       GP_IAM_API_KEY
+    
+       If both Globalization Pipeline and IAM authentication credentials are provided then
+       instance will be initialized with Globalization Pipeline authentication.
+  
+    3. Use the ``VCAP_SERVICES`` environment variable for the first matching GP service instance, 
+       where matching is defined as app name = g11n-pipeline or matches the regex /gp-(.*)/
+  
 =end
 
 	GP_URL ||= "GP_URL"
 	GP_USER_ID ||= "GP_USER_ID"
 	GP_PWD ||= "GP_PASSWORD"
 	GP_INSTANCE_ID ||="GP_INSTANCE_ID"
+  GP_IAM_API_KEY ||= "GP_IAM_API_KEY"
+
 	
 	APP_NAME ||= "g11n-pipeline"
 	APP_NAME_REGEX = /gp-(.*)/
@@ -45,13 +87,20 @@ class ServiceAccount
 	USER_ID_STRING ||= "userId"
 	PASSWORD_STRING ||= "password"
 	INSTANCE_ID_STRING ||= "instanceId"
+  IAM_API_KEY_STRING ||= "apikey"
 	
-	def initialize(url_string = "", user_id = "", pwd = "", instance_id = "")
+	def initialize(url_string = "", user_id = "", pwd = "", instance_id = "", api_key="")
 		if !url_string.empty? && !user_id.empty? && !pwd.empty? && !instance_id.empty?
 			@url_string = url_string
 			@user_id = user_id
 			@pwd = pwd
 			@instance_id = instance_id
+			@iam_enabled = false
+		else if !url_string.empty? && !instance_id.empty? && !api_key.empty?
+      @url_string = url_string
+      @instance_id = instance_id
+      @api_key = api_key
+      @iam_enabled = true
 		else
 			account = get_service_account_via_env_var
 			
@@ -66,10 +115,18 @@ class ServiceAccount
 			@user_id = account[1]
 			@pwd = account[2]
 			@instance_id=account[3]
+			@api_key = account[4]
+      @iam_enabled = account[5]
 			
 		end
 	end
 		
+	def is_iam_enabled
+    @iam_enabled
+  
+  def get_api_key
+    @api_key
+    
 	def get_url_string
 		@url_string
 	end
@@ -111,22 +168,22 @@ private
 			return
 		end
 		
-		user_id = ENV[GP_USER_ID]
-		if user_id.nil?
-			return
-		end
-		
-		pwd = ENV[GP_PWD]
-		if pwd.nil?
-			return
-		end
-		
 		instance_id = ENV[GP_INSTANCE_ID]
-		if instance_id.nil?
-			return
+    if instance_id.nil?
+      return
+    end
+		
+		user_id = ENV[GP_USER_ID]
+		pwd = ENV[GP_PWD]
+		api_key=ENV[GP_IAM_API_KEY]
+		
+		if (user_id.nil? || pwd.nil?) && api_key.nil?
+		  return
 		end
-	
-		return [url_string, user_id, pwd,instance_id]
+		
+		iam_enabled=api_key.nil?false:true
+
+		return [url_string, user_id, pwd, instance_id, api_key, iam_enabled]
 	end
 	
 	def get_service_account_via_vcap_service
@@ -154,11 +211,16 @@ private
 			user_id = credentials_list[USER_ID_STRING]
 			pwd = credentials_list[PASSWORD_STRING]
 			instance_id = credentials_list[INSTANCE_ID_STRING]
-			if url.nil? || user_id.nil? || pwd.nil? || instance_id.nil?
+			api_key= credentials_list[IAM_API_KEY_STRING]
+			if url.nil? || instance_id.nil?
 				return
 			end
+			if (user_id.nil? || pwd.nil?) && api_key.nil?
+			  return
+			end
+			iam_enabled=api_key.nil?false:true
 			
-			return [url, user_id, pwd, instance_id]
+			return [url, user_id, pwd, instance_id, api_key, iam_enabled]
 		end
 		
 		return
