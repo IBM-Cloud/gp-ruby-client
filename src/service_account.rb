@@ -104,17 +104,12 @@ class ServiceAccount
       @api_key = api_key
       @iam_enabled = true
     
-		else
-			account = get_service_account_via_env_var
-			
-			if account.nil?
-				account = get_service_account_via_vcap_service
-					if account.nil?
-						raise "Couldn't create a service account"
-					end
+	  else
+	    account = get_service_account_via_env_var
+	    if account.nil?
+	      account = get_service_account_via_vcap_service
 			end
-			
-      if account.nil? && !credsFilePath.empty?
+			if account.nil? && !credsFilePath.empty?
             credsFile = File.open credsFilePath
             creds = JSON.parse(credsFile)
             if !creds.nil
@@ -122,6 +117,9 @@ class ServiceAccount
                 creds=creds["credentials"]
               end
               account = extractCredsFromJson(creds)
+              if account.nil?
+                raise "Couldn't create a service account"
+              end
             end
       end
 			
