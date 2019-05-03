@@ -44,7 +44,7 @@ end
 ```
 Using Ruby Client outside of Bluemix:
 
-If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID. These should correspond with the credentials in your Globalization Pipeline service instance.
+If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables for Globalization Pipeline Auth: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID or for IAM Auth:GP_URL, GP_INSTANCE_ID, GP_IAM_API_KEY. These should correspond with the credentials in your Globalization Pipeline service instance.
 
 ## Sample Application
 
@@ -115,13 +115,22 @@ This object acts as a storage for the user's credentials in order to make REST A
 
 #### initialize
 
-Creates a new service account object. This function creates a service account object that will be used to identify the user either by using user-provided parameters, environment variables or vcap service variables. This object will contain everything necessary to make the appropriate REST API calls and receive the translations. Either you must provide all the params or none of them. If you would like for this to work outside of Bluemix, you would need to set the following environment variables: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID as followed under credentials in your bound service
+Creates a new service account object. This function creates a service account object that will be used to identify the user either by using user-provided parameters, environment variables or vcap service variables. This object will contain everything necessary to make the appropriate REST API calls and receive the translations. Either you must provide all the params or none of them. If you would like for this to work outside of Bluemix, you would need to set the following environment variables for Globalization Pipeline Auth: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID or for IAM Auth:GP_URL, GP_INSTANCE_ID, GP_IAM_API_KEY as followed under credentials in your bound service. If both Globalization Pipeline and IAM authentication credentials are provided then instance will be initialized with Globalization Pipeline authentication.
 
 #### Params
 * base URL String to call
 * userId
 * password
 * instanceId
+* api_key
+
+#### is_iam_enabled
+
+Returns true if the instance holds iam auth credentials of service instance.
+
+### get_api_key
+
+Getter function to get object's IAM API key (for IAM auth)
 
 #### get_url_string
 
