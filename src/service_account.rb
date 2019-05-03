@@ -72,7 +72,7 @@ class ServiceAccount
 	GP_USER_ID ||= "GP_USER_ID"
 	GP_PWD ||= "GP_PASSWORD"
 	GP_INSTANCE_ID ||="GP_INSTANCE_ID"
-  GP_IAM_API_KEY ||= "GP_IAM_API_KEY"
+	GP_IAM_API_KEY ||= "GP_IAM_API_KEY"
 
 	
 	APP_NAME ||= "g11n-pipeline"
@@ -87,20 +87,23 @@ class ServiceAccount
 	USER_ID_STRING ||= "userId"
 	PASSWORD_STRING ||= "password"
 	INSTANCE_ID_STRING ||= "instanceId"
-  IAM_API_KEY_STRING ||= "apikey"
+	IAM_API_KEY_STRING ||= "apikey"
 	
-	def initialize(url_string = "", user_id = "", pwd = "", instance_id = "", api_key="")
-		if !url_string.empty? && !user_id.empty? && !pwd.empty? && !instance_id.empty?
+	def initialize(url_string = "", user_id = "", pwd = "", instance_id = "", api_key="", credsFilePath = "")
+	  
+	  if !url_string.empty? && !user_id.empty? && !pwd.empty? && !instance_id.empty?
 			@url_string = url_string
 			@user_id = user_id
 			@pwd = pwd
 			@instance_id = instance_id
 			@iam_enabled = false
+			
 		else if !url_string.empty? && !instance_id.empty? && !api_key.empty?
       @url_string = url_string
       @instance_id = instance_id
       @api_key = api_key
       @iam_enabled = true
+    
 		else
 			account = get_service_account_via_env_var
 			
@@ -110,6 +113,17 @@ class ServiceAccount
 						raise "Couldn't create a service account"
 					end
 			end
+			
+      if account.nil? && !credsFilePath.empty?
+            credsFile = File.open credsFilePath
+            creds = JSON.parse(credsFile)
+            if !creds.nil
+              if creds.has_key?("credentials")
+                creds=creds["credentials"]
+              end
+              account = extractCredsFromJson(creds)
+            end
+      end
 			
 			@url_string = account[0]
 			@user_id = account[1]
@@ -205,24 +219,27 @@ private
 		end
 
 		credentials_list = JSON.parse(vcap_services)[app_name][CREDENTIALS_INDEX][CREDENTIALS]
-		
-		if !credentials_list.nil?
-			url = credentials_list[URL_STRING]
-			user_id = credentials_list[USER_ID_STRING]
-			pwd = credentials_list[PASSWORD_STRING]
-			instance_id = credentials_list[INSTANCE_ID_STRING]
-			api_key= credentials_list[IAM_API_KEY_STRING]
-			if url.nil? || instance_id.nil?
-				return
-			end
-			if (user_id.nil? || pwd.nil?) && api_key.nil?
-			  return
-			end
-			iam_enabled=api_key.nil?false:true
-			
-			return [url, user_id, pwd, instance_id, api_key, iam_enabled]
-		end
-		
-		return
+		return extractCredsFromJson(credentials_list)
 	end
+	
+	def extractCredsFromJson(credentials_list)
+	  
+    if credentials_list.nil?
+      return
+    end
+    url = credentials_list[URL_STRING]
+    user_id = credentials_list[USER_ID_STRING]
+    pwd = credentials_list[PASSWORD_STRING]
+    instance_id = credentials_list[INSTANCE_ID_STRING]
+    api_key= credentials_list[IAM_API_KEY_STRING]
+    if url.nil? || instance_id.nil?
+      return
+    end
+    if (user_id.nil? || pwd.nil?) && api_key.nil?
+      return
+    end
+    iam_enabled=api_key.nil?false:true
+    return [url, user_id, pwd, instance_id, api_key, iam_enabled]
+  end
+	
 end
