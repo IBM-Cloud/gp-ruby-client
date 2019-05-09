@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'gp-ruby-client'
-  s.version     = '0.1.0'
-  s.date        = '2019-05-06'
+  s.version     = '0.1.1'
+  s.date        = '2019-05-09'
   s.summary     = "Ruby SDK for Globalization Pipeline"
   s.description = "Ruby SDK for Globalization Pipeline on IBM Cloud"
   s.authors     = ["Visaahan Anandarajah"]

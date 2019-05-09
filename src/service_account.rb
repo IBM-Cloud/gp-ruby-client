@@ -98,7 +98,7 @@ class ServiceAccount
 			@instance_id = instance_id
 			@iam_enabled = false
 			
-		else if !url_string.empty? && !instance_id.empty? && !api_key.empty?
+		elsif !url_string.empty? && !instance_id.empty? && !api_key.empty?
       @url_string = url_string
       @instance_id = instance_id
       @api_key = api_key
@@ -117,12 +117,12 @@ class ServiceAccount
                 creds=creds["credentials"]
               end
               account = extractCredsFromJson(creds)
-              if account.nil?
-                raise "Couldn't create a service account"
-              end
             end
       end
-			
+      if account.nil?
+        raise "Couldn't create a service account"
+      end
+      
 			@url_string = account[0]
 			@user_id = account[1]
 			@pwd = account[2]
@@ -130,14 +130,16 @@ class ServiceAccount
 			@api_key = account[4]
       @iam_enabled = account[5]
 			
-		end
+    end
 	end
 		
 	def is_iam_enabled
     @iam_enabled
+	end
   
   def get_api_key
     @api_key
+  end
     
 	def get_url_string
 		@url_string
@@ -170,58 +172,59 @@ class ServiceAccount
 	def set_instance_id(instance_id)
 		@instance_id = instance_id
 	end
-	
+
+
 private
 
-	def get_service_account_via_env_var
-	
-		url_string = ENV[GP_URL]
-		if url_string.nil?
-			return
-		end
-		
-		instance_id = ENV[GP_INSTANCE_ID]
+  def get_service_account_via_env_var
+  
+    url_string = ENV[GP_URL]
+    if url_string.nil?
+      return
+    end
+    
+    instance_id = ENV[GP_INSTANCE_ID]
     if instance_id.nil?
       return
     end
-		
-		user_id = ENV[GP_USER_ID]
-		pwd = ENV[GP_PWD]
-		api_key=ENV[GP_IAM_API_KEY]
-		
-		if (user_id.nil? || pwd.nil?) && api_key.nil?
-		  return
-		end
-		
-		iam_enabled=api_key.nil?false:true
+    
+    user_id = ENV[GP_USER_ID]
+    pwd = ENV[GP_PWD]
+    api_key=ENV[GP_IAM_API_KEY]
+    
+    if (user_id.nil? || pwd.nil?) && api_key.nil?
+      return
+    end
+    
+    iam_enabled=api_key.nil?false:true
 
-		return [url_string, user_id, pwd, instance_id, api_key, iam_enabled]
-	end
-	
-	def get_service_account_via_vcap_service
-	
-		vcap_services = ENV[VCAP_SERVICES]
+    return [url_string, user_id, pwd, instance_id, api_key, iam_enabled]
+  end
+  
+  def get_service_account_via_vcap_service
+  
+    vcap_services = ENV[VCAP_SERVICES]
 
-		if vcap_services.nil?
-			return
-		end
-		
-		json_vcap_services = JSON.parse(vcap_services)
-		
-		app_name = ""
-		json_vcap_services.each do |key, value|
-			if (key =~ APP_NAME_REGEX or key.equals? (APP_NAME))
-				app_name = key
-				break
-			end
-		end
+    if vcap_services.nil?
+      return
+    end
+    
+    json_vcap_services = JSON.parse(vcap_services)
+    
+    app_name = ""
+    json_vcap_services.each do |key, value|
+      if (key =~ APP_NAME_REGEX or key.equals?(APP_NAME))
+        app_name = key
+        break
+      end
+    end
 
-		credentials_list = JSON.parse(vcap_services)[app_name][CREDENTIALS_INDEX][CREDENTIALS]
-		return extractCredsFromJson(credentials_list)
-	end
-	
-	def extractCredsFromJson(credentials_list)
-	  
+    credentials_list = JSON.parse(vcap_services)[app_name][CREDENTIALS_INDEX][CREDENTIALS]
+    return extractCredsFromJson(credentials_list)
+  end
+  
+  def extractCredsFromJson(credentials_list)
+    
     if credentials_list.nil?
       return
     end
