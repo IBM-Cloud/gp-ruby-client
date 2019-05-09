@@ -40,16 +40,16 @@ class RESTClient
 	
 	@supportedLangs = ['en','de','es','fr','it', 'ja','ko', 'pt-BR', 'zh-Hans', 'zh-Hant'] 
 	@expectedMatches = {
-            'en': 'en', 'en_US': 'en', 'en-US': 'en',
-            'de': 'de', 'de_at': 'de', 'de-at': 'de',
-            'es': 'es', 'es_mx': 'es', 'es-mx': 'es',
-            'fr': 'fr', 'fr_FR': 'fr', 'fr-Fr': 'fr', 'fr_CA': 'fr',
-            'it': 'it', 'it_ch': 'it', 'it-ch': 'it', 'it-IT': 'it',
-            'ja': 'ja', 'ja_JA': 'ja', 'ja-JA': 'ja',
-            'ko': 'ko', 'ko_KO': 'ko', 'ko-KO': 'ko',
-            'pt-BR': 'pt-BR', 'pt': nil,
-            'zh': 'zh-Hans', 'zh-tw': 'zh-Hant', 'zh-cn': 'zh-Hans',
-            'zh-hk': 'zh-Hant', 'zh-sg': 'zh-Hans',
+    'en'=> 'en', 'en_US'=> 'en', 'en-US'=> 'en',
+                'de'=> 'de', 'de_at'=> 'de', 'de-at'=> 'de',
+                'es'=> 'es', 'es_mx'=> 'es', 'es-mx'=> 'es',
+                'fr'=> 'fr', 'fr_FR'=> 'fr', 'fr-Fr'=> 'fr', 'fr_CA'=> 'fr',
+                'it'=> 'it', 'it_ch'=> 'it', 'it-ch'=> 'it', 'it-IT'=> 'it',
+                'ja'=> 'ja', 'ja_JA'=> 'ja', 'ja-JA'=> 'ja',
+                'ko'=> 'ko', 'ko_KO'=> 'ko', 'ko-KO'=> 'ko',
+                'pt-BR'=> 'pt-BR', 'pt'=> nil,
+                'zh'=> 'zh-Hans', 'zh-tw'=> 'zh-Hant', 'zh-cn'=> 'zh-Hans',
+                'zh-hk'=> 'zh-Hant', 'zh-sg'=> 'zh-Hans'
     }
 	
 	def initialize(service_account, bundle_id, locale = "")
@@ -158,7 +158,7 @@ private
 		
 		if service_account.is_iam_enabled
       request["Authorization"] = "API-KEY #{service_account.get_api_key}"
-		else if basic_auth
+		elsif basic_auth
 			request.basic_auth(service_account.get_user_id, service_account.get_password)
 		else
 			hmac = HMAC.new
