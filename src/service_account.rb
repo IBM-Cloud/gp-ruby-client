@@ -196,7 +196,7 @@ private
       return
     end
     
-    iam_enabled=api_key.nil?false:true
+    iam_enabled=api_key.nil??false:true
 
     return [url_string, user_id, pwd, instance_id, api_key, iam_enabled]
   end
@@ -213,7 +213,7 @@ private
     
     app_name = ""
     json_vcap_services.each do |key, value|
-      if (key =~ APP_NAME_REGEX or key.equals?(APP_NAME))
+      if (key =~ APP_NAME_REGEX or APP_NAME.eql? key)
         app_name = key
         break
       end
@@ -239,7 +239,7 @@ private
     if (user_id.nil? || pwd.nil?) && api_key.nil?
       return
     end
-    iam_enabled=api_key.nil?false:true
+    iam_enabled=api_key.nil??false:true
     return [url, user_id, pwd, instance_id, api_key, iam_enabled]
   end
 	

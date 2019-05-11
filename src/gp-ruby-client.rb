@@ -45,7 +45,7 @@ module GP
 			@@use_service = true
 
 			def initialize(bundle_id)
-				@@bundle_id = bundle_id
+			  @@bundle_id = bundle_id
 				
 				if @@use_service && (Time.now - @@cache_control.get_last_accessed_time >= @@cache_control.get_ttl || @@just_started)
 					@@just_started = false
