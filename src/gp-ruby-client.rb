@@ -44,7 +44,7 @@ module GP
 			@@just_started = true
 			@@use_service = true
 
-			def initialize(bundle_id)
+			def initialize(bundle_id, srvc_account=ServiceAccount.new)
 			  @@bundle_id = bundle_id
 				
 				if @@use_service && (Time.now - @@cache_control.get_last_accessed_time >= @@cache_control.get_ttl || @@just_started)
@@ -54,7 +54,7 @@ module GP
 					backend = {}
 					I18n.backend = I18n::Backend::Chain.new(I18n::Backend::KeyValue.new(backend), I18n.backend)
 					
-					@@service_account = ServiceAccount.new
+					@@service_account = srvc_account
 					if @@service_account.nil?
 						raise "No valid service account"
 					end

@@ -91,14 +91,17 @@ class ServiceAccount
 	
 	def initialize(url_string = "", user_id = "", pwd = "", instance_id = "", api_key="", credsFilePath = "")
 	  
-	  if !url_string.empty? && !user_id.empty? && !pwd.empty? && !instance_id.empty?
+	  if !url_string.nil?  && !url_string.empty? && 
+      !user_id.nil? &&  !user_id.empty? && 
+      !pwd.nil? &&  !pwd.empty? &&
+      !instance_id.nil? &&  !instance_id.empty?
 			@url_string = url_string
 			@user_id = user_id
 			@pwd = pwd
 			@instance_id = instance_id
 			@iam_enabled = false
 			
-		elsif !url_string.empty? && !instance_id.empty? && !api_key.empty?
+		elsif !url_string.nil? && !url_string.empty? && !instance_id.nil? && !instance_id.empty? && !api_key.nil? && !api_key.empty?
       @url_string = url_string
       @instance_id = instance_id
       @api_key = api_key
@@ -110,14 +113,18 @@ class ServiceAccount
 	      account = get_service_account_via_vcap_service
 			end
 			if account.nil? && !credsFilePath.empty?
-            credsFile = File.open credsFilePath
-            creds = JSON.parse(credsFile)
-            if !creds.nil
-              if creds.has_key?("credentials")
-                creds=creds["credentials"]
-              end
-              account = extractCredsFromJson(creds)
+			  File.open(credsFilePath) do |credsFile|
+          creds = JSON.parse(credsFile.read) 
+          if !creds.nil?
+            if creds.has_key?("credentials")
+              creds=creds["credentials"]
             end
+            account = extractCredsFromJson(creds)
+            if account.nil?
+                   raise "Couldn't create a service account from file"
+            end
+          end
+        end
       end
       if account.nil?
         raise "Couldn't create a service account"
