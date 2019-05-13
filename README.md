@@ -31,7 +31,10 @@ If you want to use the translated strings locally, you may run `gem install gp-r
 
 Inside your application controller, you would place initializer code to use the SDK.
 
-Basic initialization code (of a CF app, depending on the binded GP service instance credentials) would look like this:
+## Initialization Options
+
+### 1. Basic initialization of a CF app using the binded GP service instance credentials   
+Code would look like this:
 
 ```Ruby
 before_filter :startUp
@@ -43,22 +46,25 @@ def startUp
 end
 ```
 
-Using Ruby Client outside of IBM Cloud with environment variables:
+### 2. Ruby Client outside of IBM Cloud depending on environment variables for credentials  
 
-If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables for Globalization Pipeline Auth: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID or for IAM Auth:GP_URL, GP_INSTANCE_ID, GP_IAM_API_KEY. These should correspond with the credentials in your Globalization Pipeline service instance.
+If you would like to use the Ruby Client outside of IBM Cloud, remember to add the following environment variables for Globalization Pipeline Auth: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID or for IAM Auth:GP_URL, GP_INSTANCE_ID, GP_IAM_API_KEY. These should correspond with the credentials in your Globalization Pipeline service instance. The code would look like same as in 1.
 
-Using Ruby Client outside of IBM Cloud with credentials file:
-Credentials file format:
-```{
-  credentials:{
+### 3. Using Ruby Client outside of IBM Cloud with credentials file  
+Credentials file format:  
+```
+{
+  "credentials":{
     "url":"<GP-SERVICE-INSTANCE-URL>",
     "userId":"<GP-AUTH-USER-ID>",
     "password":"<GP-AUTH-PASSWORD>",
     "instanceId":"<GP-SERVICE-INSTANCE-ID>",
     "apikey":"<IAM-AUTH-API-KEY>"
   }
-}```
-`url`, `instanceId` are mandatory keys irrespective of the auth mechanism used. If using GP Auth,  `userId` and `password` are mandatory keys. If using IAM auth, `apikey` is a mandatory key. If both GP Auth and IAM auth credentials are supplied, then GP Auth credentials will be used.
+}
+```    
+  
+`url`, `instanceId` are mandatory keys irrespective of the auth mechanism used.  If using GP Auth,  `userId` and `password` are mandatory keys.  If using IAM auth, `apikey` is a mandatory key.  If both GP Auth and IAM auth credentials are supplied, then GP Auth credentials will be used.  
 
 Code would look like this:
 ```Ruby
@@ -72,9 +78,7 @@ def startUp
 end
 ```
 
-
-
-Using Ruby Client by passing IAM credentials:
+### 4. Using Ruby Client by passing IAM credentials 
 ```Ruby
 before_filter :startUp
 
@@ -86,7 +90,7 @@ def startUp
 end
 ```
 
-Using Ruby Client by passing GP Auth credentials:
+### 5. Using Ruby Client by passing GP Auth credentials  
 ```Ruby
 before_filter :startUp
 
