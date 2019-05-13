@@ -24,14 +24,14 @@ Note: It is important to develop your application with the intention of using th
 
 ## Installation
 
-To use Ruby Client for Globalization Pipeline
+To use Ruby Client for Globalization Pipeline (GP)
 
 Add `gem 'gp-ruby-client'` in your gemfile. This will load up the Ruby SDK Gem and you can add require 'gp-ruby-client' in any file where you want to use the SDK.
 If you want to use the translated strings locally, you may run `gem install gp-ruby-client` in your shell.
 
 Inside your application controller, you would place initializer code to use the SDK.
 
-Basic initialization code would look like this:
+Basic initialization code (of a CF app, depending on the binded GP service instance credentials) would look like this:
 
 ```Ruby
 before_filter :startUp
@@ -42,9 +42,63 @@ def startUp
   my_ruby_client = GP::Ruby::Client.new($bundle_id)
 end
 ```
-Using Ruby Client outside of Bluemix:
+
+Using Ruby Client outside of IBM Cloud with environment variables:
 
 If you would like to use the Ruby Client outside of Bluemix, remember to add the following environment variables for Globalization Pipeline Auth: GP_URL, GP_USER_ID, GP_PASSWORD, GP_INSTANCE_ID or for IAM Auth:GP_URL, GP_INSTANCE_ID, GP_IAM_API_KEY. These should correspond with the credentials in your Globalization Pipeline service instance.
+
+Using Ruby Client outside of IBM Cloud with credentials file:
+Credentials file format:
+```{
+  credentials:{
+    "url":"<GP-SERVICE-INSTANCE-URL>",
+    "userId":"<GP-AUTH-USER-ID>",
+    "password":"<GP-AUTH-PASSWORD>",
+    "instanceId":"<GP-SERVICE-INSTANCE-ID>",
+    "apikey":"<IAM-AUTH-API-KEY>"
+  }
+}```
+`url`, `instanceId` are mandatory keys irrespective of the auth mechanism used. If using GP Auth,  `userId` and `password` are mandatory keys. If using IAM auth, `apikey` is a mandatory key. If both GP Auth and IAM auth credentials are supplied, then GP Auth credentials will be used.
+
+Code would look like this:
+```Ruby
+before_filter :startUp
+
+def startUp
+  require 'gp-ruby-client'
+  srvc_account=ServiceAccount.new(nil,
+       nil,nil,nil,nil,"<Path-To-Credentials-File>")
+  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+end
+```
+
+
+
+Using Ruby Client by passing IAM credentials:
+```Ruby
+before_filter :startUp
+
+def startUp
+  require 'gp-ruby-client'
+  srvc_account=ServiceAccount.new("<GP-URL>",
+    nil,nil,"<GP-INSTANCE-ID>","<API-KEY>")
+  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+end
+```
+
+Using Ruby Client by passing GP Auth credentials:
+```Ruby
+before_filter :startUp
+
+def startUp
+  require 'gp-ruby-client'
+  srvc_account=ServiceAccount.new("<GP-URL>",
+    <GP-Username>,<GP-Password>)
+  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+end
+```
+
+
 
 ## Sample Application
 
