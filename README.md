@@ -74,7 +74,7 @@ def startUp
   require 'gp-ruby-client'
   srvc_account=ServiceAccount.new(nil,
        nil,nil,nil,nil,"<Path-To-Credentials-File>")
-  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+  my_ruby_client = GP::Ruby::Client.new($bundle_id,srvc_account)
 end
 ```
 
@@ -86,7 +86,7 @@ def startUp
   require 'gp-ruby-client'
   srvc_account=ServiceAccount.new("<GP-URL>",
     nil,nil,"<GP-INSTANCE-ID>","<API-KEY>")
-  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+  my_ruby_client = GP::Ruby::Client.new($bundle_id,srvc_account)
 end
 ```
 
@@ -98,7 +98,7 @@ def startUp
   require 'gp-ruby-client'
   srvc_account=ServiceAccount.new("<GP-URL>",
     <GP-Username>,<GP-Password>)
-  my_ruby_client = GP::Ruby::Client.new($bundle_id)
+  my_ruby_client = GP::Ruby::Client.new($bundle_id,srvc_account)
 end
 ```
 
