@@ -130,6 +130,7 @@ This functions initializes several objects, such as the ServiceAccount object an
 
 #### Params
 * bundle_id
+* srvc_account (optional)
 
 #### get_bundle_id
 Retrieves the name of your bundle.
