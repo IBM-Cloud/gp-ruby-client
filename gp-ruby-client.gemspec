@@ -12,5 +12,5 @@ Gem::Specification.new do |s|
   "documentation_uri" => "https://github.com/IBM-Cloud/gp-ruby-client",
   "source_code_uri"   => "https://github.com/IBM-Cloud/gp-ruby-client"
   }
-  s.files       = ["src/cache_control.rb", "src/gp-ruby-client.rb", "src/rest_client.rb", "src/service_account.rb", "src/hmac.rb"]
+  s.files       = ["lib/cache_control.rb", "lib/gp-ruby-client.rb", "lib/rest_client.rb", "lib/service_account.rb", "lib/hmac.rb"]
 end
