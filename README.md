@@ -102,11 +102,6 @@ def startUp
 end
 ```
 
-## Generating gem
-Rename the `src` folder to `lib` on the local machine and then run 
-`gem build gp-ruby-client.gemspec`
-
-
 ## Sample Application
 
 A sample application is provided [here](https://github.com/IBM-Bluemix/gp-ruby-sample). See the application's readme in the link for more details.
